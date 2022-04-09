@@ -1,0 +1,143 @@
+QMainWindow {
+  background: #ffffff;
+}
+
+#search_line {
+  background-color: #CDE9DB;
+  padding: 0;
+  margin: 0;
+  border: none;
+  border-radius: 5px;
+}
+
+#search_btn {
+  background-color: #CDE9DB;
+  width: 30px;
+  height: 25px;
+  border: none;
+}
+
+#logo {
+  font-size: 24px;
+  background-color: #4DAF7C;;
+  color: white;
+}
+
+#search_btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+QPushButton[name="mini_window"] {
+  border: none;
+  margin: 0;
+}
+
+QPushButton[name="mini_window"]:hover {
+  background-color: #CDE9DB;
+}
+
+QPushButton[name="close_window"] {
+  margin: 0;
+  border: none;
+}
+
+QPushButton[name="close_window"]:hover {
+  background-color: #EA6E4D;
+}
+
+#left_widget {
+  background-color: #4DAF7C;
+}
+
+#left_widget QPushButton {
+  background-color: #4DAF7C;
+  border: none;
+}
+
+#left_widget QPushButton:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+#left_widget QPushButton[selected="true"] {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+QSlider::groove:horizontal {
+  height: 3px; /* the groove expands to the size of the slider by default. by giving it a height, it has a fixed size */
+  background: #f0f0f0;
+  margin: 2px 0;
+}
+
+QSlider::handle:horizontal {
+  border: none;
+  border-radius: 3px;
+}
+
+QSlider::add-page:horizontal {
+  background: #f0f0f0;
+}
+
+QSlider::sub-page:horizontal {
+  background: #8eccac;
+}
+
+#img_url {
+  background-color: #ffffff;
+}
+
+QTableView {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-top: 3px solid #4DAF7C;
+  border-bottom: 2px solid #4DAF7C;
+}
+
+QTableView::item {
+  text-align: center;
+  border-bottom: 1px solid rgba(77, 175, 124, 0.5);
+}
+
+QTableView::item:selected {
+  background-color: #4DAF7C;
+}
+
+QHeaderView {
+  border: none;
+}
+
+QHeaderView::section:horizontal {
+  border-bottom: 2px solid #4DAF7C;
+}
+
+QScrollBar:vertical {
+  width: 3px;
+  background-color: rgb(248, 248, 248);
+}
+
+QScrollBar::handle:vertical {
+  width: 3px;
+  background: #4DAF7C;
+  border-radius: 5px;
+  min-height: 20px;
+}
+
+QPushButton[play_controller="true"] {
+  border: none;
+}
+
+QWidget#page_widget {
+  border: none;
+  border-bottom: 2px solid #4DAF7C;
+}
+
+QWidget[operation_widget="true"] QPushButton {
+  background-color: transparent;
+  border: none;
+}
+
+QWidget[operation_widget="true"] QPushButton:hover {
+  background-color: rgba(77, 175, 124, 0.2);
+}
+
+QScrollArea {
+  background-color: white;
+}
