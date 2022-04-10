@@ -1,4 +1,4 @@
-from PySide6.QtCore import QSize, Signal, QItemSelectionModel, QPoint
+from PySide6.QtCore import QSize, Signal, QItemSelectionModel, QPoint, QThread
 from PySide6.QtGui import QIcon, QStandardItemModel, QStandardItem, Qt
 from PySide6.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QPushButton, QTableView, QAbstractItemView, \
     QHeaderView, QStackedLayout, QMessageBox, QLineEdit, QLabel
@@ -357,6 +357,8 @@ class ContentWidget(QWidget):
         self.req_api = RequestAPI(url, RequestAPI.GET_URL)
         self.req_api.get_song_url.connect(self.handle_play_music)
         self.req_api.req_error.connect(self.handle_request_error)
+        # 线程任务完成的时候有空就删除线程对象
+        self.req_api.finished.connect(self.req_api.deleteLater)
         self.req_api.start()
 
     #####################槽函数处理部分开始#############################
@@ -402,6 +404,7 @@ class ContentWidget(QWidget):
             self.is_clicked = True
             req_url = f"https://autumnfish.cn/cloudsearch?keywords={self.keys}&offset={(self.cur_page - 1) * self.MAX_COUNT}"
             self.req_api = RequestAPI(req_url)
+            self.req_api.finished.connect(self.req_api.deleteLater)
             self.req_api.req_error.connect(self.handle_request_error)
             # 请求成功后更新tableview model
             self.req_api.update_table_view.connect(self.handle_update_search_table_model)

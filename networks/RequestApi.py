@@ -1,12 +1,11 @@
 # 开启多线程请求后台数据
 # 2022/3/22
 import requests
-from PySide6.QtCore import QThread, Signal, QObject, QRunnable, QThreadPool
+from PySide6.QtCore import QThread, Signal
 from Entity.Music import Music
 
 
 class RequestAPI(QThread):
-    test = Signal(str)
     # 更新table_view
     update_table_view = Signal(dict)
     # 获取歌曲播放url
@@ -76,6 +75,7 @@ class RequestAPI(QThread):
             result = response.json()
             # 获取歌曲的播放url
             url = result["data"][0]["url"]
+            print(url)
             self.get_song_url.emit(url)
         else:
             self.req_error.emit()
@@ -157,3 +157,125 @@ class RequestAPI(QThread):
 #
 #     def destroyed_thread_pool_executor(self):
 #         self.executor.shutdown()
+# class RequestAPI(QObject):
+#     def __init__(self):
+#         super().__init__()
+#
+#     def start_thread(self, task):
+#         QThreadPool.globalInstance().start(task)
+#
+#
+# class TaskBase(QObject):
+#     test = Signal(str)
+#     # 更新table_view
+#     update_table_view = Signal(dict)
+#     # 获取歌曲播放url
+#     get_song_url = Signal(str)
+#     # 获取专辑图片
+#     get_pic_content = Signal(bytes)
+#     # 请求出错
+#     req_error = Signal()
+#
+#     def __init__(self, url):
+#         super().__init__()
+#         self.url = url
+#         self.headers = {
+#             "user-agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36",
+#         }
+#
+#
+# class SearchContentTask(QObject, QRunnable):
+#     update_table_view = Signal(dict)
+#     # 获取歌曲播放url
+#     get_song_url = Signal(str)
+#     # 获取专辑图片
+#     get_pic_content = Signal(bytes)
+#     # 请求出错
+#     req_error = Signal()
+#
+#     def __init__(self, url):
+#         super(SearchContentTask, self).__init__()
+#         self.url = url
+#         self.headers = {
+#             "user-agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36",
+#         }
+#
+#     def run(self) -> None:
+#         response = requests.get(self.url, headers=self.headers)
+#         if response.status_code == 200:
+#             results = response.json()["result"]
+#             songCount = results["songCount"]
+#             songs = results["songs"]
+#             music_list = []
+#             for song in songs:
+#                 s_id = song["id"]
+#                 song_name = song["name"]
+#                 artists = ""
+#                 for ar in song["ar"]:
+#                     artists += ar["name"] + "、"
+#                 artists = artists[:-1]
+#                 album = song["al"]["name"]
+#                 al_img = song["al"]["picUrl"]
+#                 duration = song["dt"]
+#                 music = Music(s_id, song_name, artists, album, al_img, duration)
+#                 music_list.append(music)
+#             dic = {
+#                 "music_list": music_list,
+#                 "songCount": songCount
+#             }
+#             self.update_table_view.emit(dic)
+#         else:
+#             self.req_error.emit()
+#
+#
+# class GetMusicUrlTask(TaskBase, QRunnable):
+#     def __init__(self, url):
+#         super(GetMusicUrlTask, self).__init__(url)
+#         self.setAutoDelete(True)
+#
+#     def run(self) -> None:
+#         response = requests.get(self.url, headers=self.headers)
+#         if response.status_code == 200:
+#             result = response.json()
+#             # 获取歌曲的播放url
+#             url = result["data"][0]["url"]
+#             self.get_song_url.emit(url)
+#         else:
+#             self.req_error.emit()
+#
+#
+# class GetImageContentTask(TaskBase, QRunnable):
+#     def __init__(self, url):
+#         self.setAutoDelete(True)
+#         super(GetImageContentTask, self).__init__(url)
+#         self.setAutoDelete(True)
+#
+#     def run(self) -> None:
+#         response = requests.get(self.url, headers=self.headers)
+#         if response.status_code == 200:
+#             self.get_pic_content.emit(response.content)
+#         else:
+#             self.req_error.emit()
+#
+#
+# class App(QWidget):
+#     def __init__(self):
+#         super(App, self).__init__()
+#         self.resize(600, 600)
+#         self.setWindowTitle("HelloFuck")
+#         req_url = f"https://autumnfish.cn/cloudsearch?keywords=洛天依"
+#         self.task = SearchContentTask(req_url)
+#         self.task.update_table_view.connect(lambda dic: print(dic))
+#         self.task.autoDelete()
+#         self.req = RequestAPI()
+#         self.task.destroyed.connect(lambda: print("destroyed"))
+#         self.req.start_thread(self.task)
+#         bt = QPushButton(self)
+#         bt.setText("fuck")
+#
+#
+# if __name__ == '__main__':
+#     app = QApplication()
+#     window = App()
+#     window.show()
+#     sys.exit(app.exec())

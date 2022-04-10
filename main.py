@@ -1,12 +1,10 @@
-# 音乐播放器
-# pyside6
-# 2022/3/18
+# # 音乐播放器
+# # pyside6
+# # 2022/3/18
 import sys
-
 from PySide6.QtCore import Qt
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
-
 from component.WindowTitle import WindowTitle
 from component.ContentWidget import ContentWidget
 from utils.commonhelper import CommonHelper

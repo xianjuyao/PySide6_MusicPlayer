@@ -42,11 +42,15 @@ class DB_Utils(QObject):
     # 添加数据或者删除数据
     def exec_sql(self, sql):
         self.db_thread = DBThread(self.exec_sql_task, sql)
+        # 线程任务完成后删除稍后该对象
+        self.db_thread.finished.connect(self.db_thread.deleteLater)
         self.db_thread.start()
 
     # 查询数据
     def exec_select(self, sql):
         self.db_thread = DBThread(self.select_task, sql)
+        # 线程任务完成后删除稍后该对象
+        self.db_thread.finished.connect(self.db_thread.deleteLater)
         self.db_thread.start()
 
     # 查询任务

@@ -1,6 +1,6 @@
 import sys
 from PySide6.QtCore import QUrl, Qt, QSize, Signal
-from PySide6.QtGui import QPixmap, QIcon, QColor
+from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
 from PySide6.QtWidgets import QWidget, QApplication, QPushButton, QHBoxLayout, QLabel, QVBoxLayout
 
@@ -62,6 +62,7 @@ class MusicPlayer(QWidget):
         self.player.setSource(QUrl(music.real_play_url))
         # 开启线程设置图片
         self.req_api = RequestAPI(music.album_img_url, RequestAPI.GET_IMAGE_CONTENT)
+        self.req_api.finished.connect(self.req_api.deleteLater)
         self.req_api.get_pic_content.connect(self.handle_get_pic_content)
         self.req_api.start()
         # 设置正在播放的歌曲名称
