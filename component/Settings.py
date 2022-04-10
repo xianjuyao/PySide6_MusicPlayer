@@ -2,7 +2,7 @@
 # 设置方面
 # 2022/04/07
 from PySide6.QtGui import QFont
-from PySide6.QtWidgets import *
+from PySide6.QtWidgets import QWidget,QHBoxLayout,QVBoxLayout,QLabel,QGroupBox,QScrollArea
 from utils.commonhelper import CommonHelper
 
 
@@ -59,8 +59,8 @@ class Settings(QWidget):
         return group
 
 
-if __name__ == '__main__':
-    app = QApplication()
-    settings = Settings()
-    settings.show()
-    app.exec()
+# if __name__ == '__main__':
+#     app = QApplication()
+#     settings = Settings()
+#     settings.show()
+#     app.exec()
