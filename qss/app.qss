@@ -140,4 +140,7 @@ QWidget[operation_widget="true"] QPushButton:hover {
 
 QScrollArea {
   background-color: white;
+  border: none;
+  border-top: 3px solid #4DAF7C;
+  border-bottom: 2px solid #4DAF7C;
 }

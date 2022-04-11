@@ -2,12 +2,12 @@
 # 设置方面
 # 2022/04/07
 from PySide6.QtGui import QFont
-from PySide6.QtWidgets import QWidget,QHBoxLayout,QVBoxLayout,QLabel,QGroupBox,QScrollArea
+from PySide6.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QLabel, QGroupBox, QScrollArea
 from utils.commonhelper import CommonHelper
 
 
 class Settings(QWidget):
-    def __init__(self,parent):
+    def __init__(self, parent):
         super(Settings, self).__init__(parent)
         self.license = CommonHelper.read_file(r"licenses/license.html")
         self.setup_ui()
@@ -21,8 +21,8 @@ class Settings(QWidget):
 
     def create_scroll_area(self):
         v_layout = QVBoxLayout()
-        v_layout.setContentsMargins(0, 0, 0, 0)
         v_layout.setSpacing(0)
+        v_layout.setContentsMargins(0, 0, 8, 0)
         s_area = QScrollArea(self)
         s_area.setLayout(v_layout)
         v_layout.addWidget(self.create_version_block(s_area))
@@ -33,6 +33,7 @@ class Settings(QWidget):
     def create_group(self, parent, title, widget):
         v_layout = QVBoxLayout()
         v_layout.setSpacing(0)
+        v_layout.setContentsMargins(8, 8, 0, 8)
         group = QGroupBox(title, parent)
         group.setFont(QFont("微软雅黑", 13))
         group.setLayout(v_layout)
@@ -57,7 +58,6 @@ class Settings(QWidget):
         label.setText("当前版本:1.0")
         group = self.create_group(parent, "软件版本", label)
         return group
-
 
 # if __name__ == '__main__':
 #     app = QApplication()

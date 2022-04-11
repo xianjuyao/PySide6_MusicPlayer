@@ -39,34 +39,30 @@ class RequestAPI(QThread):
             self.get_real_img_url()
 
     def search_content(self):
-        try:
-            response = requests.get(self.url, headers=self.headers)
-            if response.status_code == 200:
-                results = response.json()["result"]
-                songCount = results["songCount"]
-                songs = results["songs"]
-                music_list = []
-                for song in songs:
-                    s_id = song["id"]
-                    song_name = song["name"]
-                    artists = ""
-                    for ar in song["ar"]:
-                        artists += ar["name"] + "、"
-                    artists = artists[:-1]
-                    album = song["al"]["name"]
-                    al_img = song["al"]["picUrl"]
-                    duration = song["dt"]
-                    music = Music(s_id, song_name, artists, album, al_img, duration)
-                    music_list.append(music)
-                dic = {
-                    "music_list": music_list,
-                    "songCount": songCount
-                }
-                self.update_table_view.emit(dic)
-            else:
-                self.req_error.emit()
-        except Exception as e:
-            print(e)
+        response = requests.get(self.url, headers=self.headers)
+        if response.status_code == 200:
+            results = response.json()["result"]
+            songCount = results["songCount"]
+            songs = results["songs"]
+            music_list = []
+            for song in songs:
+                s_id = song["id"]
+                song_name = song["name"]
+                artists = ""
+                for ar in song["ar"]:
+                    artists += ar["name"] + "、"
+                artists = artists[:-1]
+                album = song["al"]["name"]
+                al_img = song["al"]["picUrl"]
+                duration = song["dt"]
+                music = Music(s_id, song_name, artists, album, al_img, duration)
+                music_list.append(music)
+            dic = {
+                "music_list": music_list,
+                "songCount": songCount
+            }
+            self.update_table_view.emit(dic)
+        else:
             self.req_error.emit()
 
     def get_music_url(self):
@@ -75,7 +71,6 @@ class RequestAPI(QThread):
             result = response.json()
             # 获取歌曲的播放url
             url = result["data"][0]["url"]
-            print(url)
             self.get_song_url.emit(url)
         else:
             self.req_error.emit()
