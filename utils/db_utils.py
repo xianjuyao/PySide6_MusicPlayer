@@ -80,7 +80,6 @@ class DB_Utils(QObject):
         finally:
             # 修改完成，释放锁
             self.lock.unlock()
-            self.db_thread.quit()
 
     # 更新任务
     def exec_sql_task(self, sql):
@@ -95,7 +94,6 @@ class DB_Utils(QObject):
         finally:
             # 修改完成，释放锁
             self.lock.unlock()
-            self.db_thread.quit()
 
     # 关闭数据库
     def close_db(self):
