@@ -8,8 +8,8 @@ from networks.RequestApi import RequestAPI
 from utils.commonhelper import CommonHelper
 from utils.db_utils import DB_Utils
 from utils.timeformart import TimeFormat
-from component.Settings import Settings
-from component.MusicPlayer import MusicPlayer
+from component.settings import Settings
+from component.musicplayer import MusicPlayer
 from math import ceil
 
 

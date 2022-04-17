@@ -4,7 +4,7 @@ from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
 from PySide6.QtWidgets import QWidget, QApplication, QPushButton, QHBoxLayout, QLabel, QVBoxLayout
 
-from component.MySlider import MySlider
+from component.myslider import MySlider
 from networks.RequestApi import RequestAPI
 from utils.timeformart import TimeFormat
 
