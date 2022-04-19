@@ -91,17 +91,18 @@ class MusicPlayer(QMainWindow):
         self.win_title.search_content.connect(lambda keys: self.content_widget.start_search_content.emit(keys))
 
     def closeEvent(self, event) -> None:
-        # Spontaneous show events are sent just after the window system shows the window;
-        # 如果当前窗口不可见,说明在系统托盘中,直接退出程序即可
+        # 如果窗口不可见 直接退出程序即可
         if not self.isVisible():
             return
-        # 如果当前窗口可见,最小化托盘
+        # 如果托盘可见隐藏至托盘
         if self._tray_icon.isVisible():
-            QMessageBox.information(self, "系统托盘",
-                                    "系统将会在系统托盘中保持运行"
-                                    "如果想结束程序, 请在系统托盘右键退出")
             self.hide()
             event.ignore()
+
+    def setVisible(self, visible: bool) -> None:
+        self._minimize_action.setEnabled(visible)
+        self._restore_action.setEnabled(not visible)
+        super().setVisible(visible)
 
 
 if __name__ == '__main__':
@@ -109,6 +110,6 @@ if __name__ == '__main__':
     if not QSystemTrayIcon.isSystemTrayAvailable():
         QMessageBox.critical(None, "系统托盘", "本系统检测不出系统托盘")
         sys.exit(1)
-    QApplication.setQuitOnLastWindowClosed(False)
+    QApplication.setQuitOnLastWindowClosed(False)  # 关闭最后一个窗口不退出程序
     player = MusicPlayer()
     sys.exit(app.exec())
